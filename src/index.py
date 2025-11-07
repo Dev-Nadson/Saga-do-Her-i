@@ -1,30 +1,36 @@
-import services
-
+from services import Player
 class Menu():
-    charactersList = {}
-    sistema = services.Player()
-    def menuPrincipal():
+    def __init__(self):
+        self.players = []
+
+    def mainMenu(self):
         while True:
             print("===== MENU DO HERÓI =====\n")
             print("1 - Criar Personagem")
             print("2 - Entrar no jogo")
             opcao = int(input("Opção: "))
 
-            match(opcao):
+            match opcao:
                 case 1:
-                    print(" ===== Escolha sua classe ===== ")
-                    print("1 - Guerreiro")
-                    print("2 - Arqueiro")
-                    print("3 - Mago")
-                    opcao = int(input("Opção: "))
+                    self.create_hero()
 
-                    if opcao in (1, 2, 3):
-                        player = services.Player.create_player(opcao)
-                        print(player)
+                case 2:
+                    print("Entrando no jogo...\n")
 
-                    else:
-                        print("Opção inválida")
-                        break
-                    
+                case _:
+                    print("Opção inválida.\n")
 
-Menu.menuPrincipal()
+    def create_hero(self):
+            print(" ===== Escolha sua classe ===== ")
+            print("1 - Guerreiro")
+            print("2 - Arqueiro")
+            print("3 - Mago")
+            opcao = int(input("Opção: "))
+
+            if opcao in (1, 2, 3):
+                player = Player.create_player(opcao)
+                self.players.append(player)
+                print(f"Personagem: {player} criado!")
+
+            else:
+                print("Opção inválida")
