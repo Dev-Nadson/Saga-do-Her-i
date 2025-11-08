@@ -12,6 +12,11 @@ class Player():
     def create_player(type):
         name = input("Informe o nome do personagem: ")
         hp = int(input("Informe a quantidade de vida do personagem: "))
+
+        while hp < 0:
+            print("Vida inválida, digite um valor positivo")
+            hp = int(input("Informe uma quantidade válida de vida pro personagem: "))
+
         strength = int(input("Informe a força do personagem: "))
 
         if type == 1:
