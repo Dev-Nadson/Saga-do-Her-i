@@ -30,3 +30,4 @@ class Player():
         if type == 3:
             magicPower = int(input("Insira o poder mágico:"))
             return Mage(name, hp, strength, bow, magicPower)
+            
