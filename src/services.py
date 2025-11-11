@@ -24,7 +24,7 @@ class Player():
             return Warrior(name, hp, strength, sword, defense)
 
         if type == 2:
-            accuracy = input(int("Insira o modificador de acerto: "))
+            accuracy = int(input("Insira o modificador de acerto: "))
             return Archer(name, hp, strength, wand, accuracy)
 
         if type == 3:
