@@ -1,10 +1,11 @@
 #Classe pai
 class Character():
-    def __init__(self, name, hp, strength, weapon):
+    def __init__(self, name, hp, strength, weapon, inventory):
         self.name = name
         self.hp = hp
         self.strength = strength
         self.weapon = weapon
+        self.inventory = inventory
 
     def __str__(self):
         return f"Nome: {self.name} \nPontos de vida: {self.hp} \nForça: {self.strength}"
@@ -20,9 +21,16 @@ class Character():
         self.hp = (self.hp - damage)
         return "Morto" if self.hp <= 0 else self.hp
     
+class Inventory():
+    def __init__(self, items):
+        self.items = items
+
+    def __str__(self):
+        return self.items
+    
 class Warrior(Character):
-    def __init__(self, name, hp, strength, weapon, defense):
-        super().__init__(name, hp, strength, weapon)
+    def __init__(self, name, hp, strength, weapon, defense, inventory):
+        super().__init__(name, hp, strength, weapon, inventory)
         self.defense = defense
 
     def __str__(self):
@@ -38,8 +46,8 @@ class Warrior(Character):
         return f"{atk} Espadada"
 
 class Archer(Character):
-    def __init__(self, name, hp, strength, weapon, accuracy):
-        super().__init__(name, hp, strength, weapon)
+    def __init__(self, name, hp, strength, weapon, accuracy, inventory):
+        super().__init__(name, hp, strength, weapon, inventory)
         self.accuracy = accuracy
 
     def __str__(self):
@@ -55,8 +63,8 @@ class Archer(Character):
         return f"{atk}, Tiro de Arco"
     
 class Mage(Character):
-    def __init__(self, name, hp, strength, weapon, magicPower):
-        super().__init__(name, hp, strength, weapon)
+    def __init__(self, name, hp, strength, weapon, magicPower, inventory):
+        super().__init__(name, hp, strength, weapon, inventory)
         self.magicPower = magicPower
 
     def __str__(self):
