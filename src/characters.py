@@ -1,6 +1,5 @@
 #Classe pai
 class Character():
-    characterList = {}
     def __init__(self, name, hp, strength, weapon):
         self.name = name
         self.hp = hp
@@ -11,17 +10,24 @@ class Character():
         return f"O ataque é de {self.strength + self.weapon.damage}"
 
     def __str__(self):
-        return f"Nome: {self.nome} \nPontos de vida: {self.hp} \nForça{self.strength}"
+        return f"Nome: {self.name} \nPontos de vida: {self.hp} \nForça: {self.strength}"
+    
+    def __iter__(self):
+        return iter(self.name, self.hp, self.strength, self.weapon)
 
 class Warrior(Character):
     def __init__(self, name, hp, strength, weapon, defense):
-        super().__init__(name, hp, weapon, strength)
+        super().__init__(name, hp, strength, weapon)
         self.defense = defense
 
     def __str__(self):
         char_str = super().__str__() 
         return f"{char_str} \nDefesa: {self.defense}"
-        
+    
+    def __iter__(self):
+        char = super().__init__(self.name, self.hp, self.strength, self.weapon)
+        return iter(self.weapon, self.defense)
+
     def atack(self):
         atk = super().atack()
         return f"{atk} Espadada"
@@ -45,7 +51,8 @@ class Mage(Character):
         self.magicPower = magicPower
 
     def __str__(self):
-        return f"Nome: {self.nome} \nPontos de vida: {self.hp} \nForça{self.strength} \nPoder Mágico: {self.magicPower}"
+        char_str = super().__str__() 
+        return f"{char_str} \nPoder Mágico: {self.magicPower}"
 
     def atack(self):
         atk = super().atack()
