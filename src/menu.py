@@ -13,8 +13,7 @@ def create_hero():
         if option in (1, 2, 3):
             player = Player.create_player(option)
 
-            #tava dando erro na hora de adicionar na lista, aparecia todo bugado, aí adicionei
-            #a propriedade iter nos objetos para poder adicionar
+            #tava dando erro na hora de adicionar na lista, aparecia todo bugado, aí adicionei a propriedade iter nos objetos para poder adicionar
             #list transforma a instância em um array, e o iter faz isso possível
             players.append(list(player))
                 
