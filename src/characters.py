@@ -43,7 +43,7 @@ class Warrior(Character):
 
     def atack(self):
         atk = super().atack()
-        return f"{atk} Espadada"
+        return f"{atk}, Ataque físico"
 
 class Archer(Character):
     def __init__(self, name, hp, strength, weapon, accuracy, inventory):
@@ -60,7 +60,7 @@ class Archer(Character):
     
     def atack(self):
         atk = super().atack()
-        return f"{atk}, Tiro de Arco"
+        return f"{atk}, Ataque a distância"
     
 class Mage(Character):
     def __init__(self, name, hp, strength, weapon, magicPower, inventory):
@@ -77,7 +77,7 @@ class Mage(Character):
     
     def atack(self):
         atk = super().atack()
-        return f"{atk}, Tiro de Mana"
+        return f"{atk}, Ataque mágico"
     
 class Enemy(Character):
     def __init__(self, name, hp, strength, type):
