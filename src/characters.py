@@ -6,9 +6,6 @@ class Character():
         self.strength = strength
         self.weapon = weapon
 
-    def atack(self):
-        return f"O ataque é de {self.strength + self.weapon.damage}"
-
     def __str__(self):
         return f"Nome: {self.name} \nPontos de vida: {self.hp} \nForça: {self.strength}"
     
@@ -16,6 +13,13 @@ class Character():
     def __iter__(self):
         return iter((self.name, self.hp, self.strength, self.weapon))
 
+    def atack(self):
+        return f"O ataque é de {self.strength + self.weapon.damage}"
+    
+    def receive_damage(self, damage):
+        self.hp = (self.hp - damage)
+        return "Morto" if self.hp > 0 else self.hp
+    
 class Warrior(Character):
     def __init__(self, name, hp, strength, weapon, defense):
         super().__init__(name, hp, strength, weapon)
@@ -42,14 +46,14 @@ class Archer(Character):
         char_str = super().__str__() 
         return f"{char_str} \nPrecisão: {self.accuracy}"
 
+    def __iter__(self):
+        super().__init__(self.name, self.hp, self.strength, self.weapon)
+        return iter((self.name, self.hp, self.strength, self.weapon.name, self.accuracy))
+    
     def atack(self):
         atk = super().atack()
         return f"{atk}, Tiro de Arco"
     
-    def __iter__(self):
-        super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter((self.name, self.hp, self.strength, self.weapon.name, self.accuracy))
-
 class Mage(Character):
     def __init__(self, name, hp, strength, weapon, magicPower):
         super().__init__(name, hp, strength, weapon)
@@ -59,14 +63,14 @@ class Mage(Character):
         char_str = super().__str__() 
         return f"{char_str} \nPoder Mágico: {self.magicPower}"
 
+    def __iter__(self):
+        super().__init__(self.name, self.hp, self.strength, self.weapon)
+        return iter((self.name, self.hp, self.strength, self.weapon.name, self.magicPower))
+    
     def atack(self):
         atk = super().atack()
         return f"{atk}, Tiro de Mana"
     
-    def __iter__(self):
-        super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter((self.name, self.hp, self.strength, self.weapon.name, self.magicPower))
-
 class Enemy(Character):
     def __init__(self, name, hp, strength, type):
         super().__init__(name, hp, strength)
