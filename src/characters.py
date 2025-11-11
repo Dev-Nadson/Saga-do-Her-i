@@ -18,7 +18,7 @@ class Character():
     
     def receive_damage(self, damage):
         self.hp = (self.hp - damage)
-        return "Morto" if self.hp > 0 else self.hp
+        return "Morto" if self.hp <= 0 else self.hp
     
 class Warrior(Character):
     def __init__(self, name, hp, strength, weapon, defense):
