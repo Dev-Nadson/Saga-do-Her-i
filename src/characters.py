@@ -14,7 +14,7 @@ class Character():
     
     #esse foi o iter que adicionei para testar fazer o for in mas não deu certo ainda, tenho quer melhor como funciona
     def __iter__(self):
-        return iter(self.name, self.hp, self.strength, self.weapon)
+        return iter((self.name, self.hp, self.strength, self.weapon))
 
 class Warrior(Character):
     def __init__(self, name, hp, strength, weapon, defense):
@@ -26,8 +26,8 @@ class Warrior(Character):
         return f"{char_str} \nDefesa: {self.defense}"
     
     def __iter__(self):
-        char = super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter(self.weapon, self.defense)
+        super().__init__(self.name, self.hp, self.strength, self.weapon)
+        return iter((self.name, self.hp, self.strength, self.weapon.name, self.defense))
 
     def atack(self):
         atk = super().atack()
@@ -45,6 +45,10 @@ class Archer(Character):
     def atack(self):
         atk = super().atack()
         return f"{atk}, Tiro de Arco"
+    
+    def __iter__(self):
+        super().__init__(self.name, self.hp, self.strength, self.weapon)
+        return iter((self.name, self.hp, self.strength, self.weapon.name, self.accuracy))
 
 class Mage(Character):
     def __init__(self, name, hp, strength, weapon, magicPower):
@@ -58,6 +62,10 @@ class Mage(Character):
     def atack(self):
         atk = super().atack()
         return f"{atk}, Tiro de Mana"
+    
+    def __iter__(self):
+        super().__init__(self.name, self.hp, self.strength, self.weapon)
+        return iter((self.name, self.hp, self.strength, self.weapon.name, self.magicPower))
 
 class Enemy(Character):
     def __init__(self, name, hp, strength, type):
