@@ -14,10 +14,11 @@ def create_hero():
             player = Player.create_player(option)
 
             #tava dando erro na hora de adicionar na lista, aparecia todo bugado, aí adicionei
-            #a propriedade iter nos objetos para poder fazer o for in
-            for char in player:
-                players.append(char)
-            print(f"Personagem: {player} \nCriado!")
+            #a propriedade iter nos objetos para poder adicionar
+            #list transforma a instância em um array, e o iter faz isso possível
+            players.append(list(player))
+                
+            print(f"Personagem:\n{player} \nCriado!")
 
         else:
             print("Opção inválida")
