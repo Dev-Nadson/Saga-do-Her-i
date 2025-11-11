@@ -12,6 +12,7 @@ class Character():
     def __str__(self):
         return f"Nome: {self.name} \nPontos de vida: {self.hp} \nForça: {self.strength}"
     
+    #esse foi o iter que adicionei para testar fazer o for in mas não deu certo ainda, tenho quer melhor como funciona
     def __iter__(self):
         return iter(self.name, self.hp, self.strength, self.weapon)
 

@@ -1,6 +1,7 @@
 from services import Player
 
 players = []
+#excluí a classe Menu para deixar em funções porque fica mais simples, e abstrai nesse arquivo para modularizar mesmo
 
 def create_hero():
         print(" ===== Escolha sua classe ===== ")
@@ -11,7 +12,9 @@ def create_hero():
 
         if option in (1, 2, 3):
             player = Player.create_player(option)
-            
+
+            #tava dando erro na hora de adicionar na lista, aparecia todo bugado, aí adicionei
+            #a propriedade iter nos objetos para poder fazer o for in
             for char in player:
                 players.append(char)
             print(f"Personagem: {player} \nCriado!")
