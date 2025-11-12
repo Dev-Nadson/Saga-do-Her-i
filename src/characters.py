@@ -1,5 +1,17 @@
 #Classe pai
+import random
+
+class Dados():
+    pass
+
+    def rolar_d20():
+        return random.randint(1,20)
+    def rolar_d6():
+        return random.randint(1,6)
+
+
 class Character():
+
     def __init__(self, name, hp, strength, weapon, inventory):
         self.name = name
         self.hp = hp
@@ -12,14 +24,23 @@ class Character():
     
     #esse foi o iter que adicionei para testar fazer o for in mas não deu certo ainda, tenho quer melhor como funciona
     def __iter__(self):
-        return iter((self.name, self.hp, self.strength, self.weapon))
+        return iter((self.name, self.hp, self.strength, self.weapon, self.inventory.items))
 
     def atack(self):
-        return f"O ataque é de {self.strength + self.weapon.damage}"
+        print(f"O ataque é de {self.strength + self.weapon.damage} ")
+        return self.strength + self.weapon.damage
     
     def receive_damage(self, damage):
         self.hp = (self.hp - damage)
         return "Morto" if self.hp <= 0 else self.hp
+    
+    def specialAbilty(self, atk):
+        if Dados.rolar_d20 > 15:
+            print("HABLIDADE ESPECIAL!")
+            return atk
+        else:
+            print("Habilidade especial falhou!")
+        
     
 class Inventory():
     def __init__(self, items):
@@ -27,7 +48,7 @@ class Inventory():
 
     def __str__(self):
         return self.items
-    
+
 class Warrior(Character):
     def __init__(self, name, hp, strength, weapon, defense, inventory):
         super().__init__(name, hp, strength, weapon, inventory)
@@ -39,12 +60,17 @@ class Warrior(Character):
     
     def __iter__(self):
         super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter((self.name, self.hp, self.strength, self.weapon.name, self.defense))
+        return iter((self.name, self.hp, self.strength, self.weapon.name, self.defense, self.inventory.items))
 
     def atack(self):
-        atk = super().atack()
-        return f"{atk}, Ataque físico"
-
+        atk = self.strength + self.weapon.damage
+        print(f"{atk}, Ataque físico")
+        return atk
+    
+    def specialAbilty(self):
+        print(f"{self.name} usou Ataque Forte!")
+        return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
+        
 class Archer(Character):
     def __init__(self, name, hp, strength, weapon, accuracy, inventory):
         super().__init__(name, hp, strength, weapon, inventory)
@@ -56,11 +82,17 @@ class Archer(Character):
 
     def __iter__(self):
         super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter((self.name, self.hp, self.strength, self.weapon.name, self.accuracy))
+        return iter((self.name, self.hp, self.strength, self.weapon.name, self.accuracy, self.inventory.items))
     
     def atack(self):
-        atk = super().atack()
-        return f"{atk}, Ataque a distância"
+       atk = self.accuracy + self.weapon.damage
+       print(f"{atk}, Ataque a distância")
+       return atk
+    
+    def specialAbilty(self, (self)):
+        print(f"{self.name} usou Tiro Ràpido!")
+        return self.accuracy + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
+
     
 class Mage(Character):
     def __init__(self, name, hp, strength, weapon, magicPower, inventory):
@@ -73,19 +105,31 @@ class Mage(Character):
 
     def __iter__(self):
         super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter((self.name, self.hp, self.strength, self.weapon.name, self.magicPower))
+        return iter((self.name, self.hp, self.strength, self.weapon.name, self.magicPower, self.inventory.items))
     
     def atack(self):
-        atk = super().atack()
-        return f"{atk}, Ataque mágico"
+        atk = self.magicPower + self.weapon.damage
+        print(f"{atk}, Ataque Mágico")
+        return atk 
     
+    def specialAbilty(self):
+        print(f"{self.name} usou Tiro Ràpido!")
+        return self.magicPower + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
+
 class Enemy(Character):
-    def __init__(self, name, hp, strength, type):
+    def __init__(self, name, hp, strength, enemy_type, special=False):
         super().__init__(name, hp, strength)
-        self.type = type
+        self.type = enemy_type
+        self.special = special
 
     def __str__(self):
-        return f"Nome: {self.nome} \nPontos de vida: {self.hp} \nForça{self.strength} \nTipo de Monstro: {self.type}"
+        return f"Nome: {self.nome} \nPontos de vida: {self.hp} \nForça{self.strength} \nTipo de Monstro: {self.enemy_type}"
+    
+    def atack(self): 
+        if Dados.rolar_d20 == 20 and self.special == True:
+            return (self.strength * 2) 
+        else:
+            return self.strength
     
 class Weapons():
    def __init__ (self, name, damage, damageType):
@@ -93,7 +137,7 @@ class Weapons():
        self.damage = damage
        self.damageType = damageType
  
-class Potion():
+class Potions():
     def __init__(self, name, effect):
         self.name = name
         self.effect = effect

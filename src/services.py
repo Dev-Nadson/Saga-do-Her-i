@@ -3,6 +3,7 @@ from characters import Archer
 from characters import Mage
 from characters import Enemy
 from characters import Weapons
+from characters import Potions
 
 sword = Weapons("Espada longa", 10, "Fisico")
 wand = Weapons("Cajado Mágico", 10, "Mágico")
@@ -31,3 +32,37 @@ class Player():
             magicPower = int(input("Insira o poder mágico:"))
             return Mage(name, hp, strength, bow, magicPower)
             
+class System():
+    def create_enemy(option, name="", hp="", strength="", enemy_type=""):
+        if option == 1:
+            return Enemy("Goblin", 100, 100, "Monster")
+        
+        if option == 2:
+            return Enemy("Fantasma", 200, 50, "Ghost")
+        
+        if option == 2:
+            return Enemy("ORC", 300, 200, "Boss", special=True)
+        
+        else:
+            return Enemy(name, hp, strength, enemy_type)
+        
+    def create_potion(option, name="", effect=""):
+        if option == 1:
+            return Potions("Poção de cura", "Cura a vida do herói")
+        
+        if option == 2:
+            return Potions("Poção de poder", "Aumenta a força do herói")
+        
+        else:
+            return Potions(name, effect)    
+    
+        
+class Game():
+    pass
+
+    def isAlive(object):
+        if object.hp <= 0: 
+            return "Personagem está morto" 
+        else: 
+            return "Persnoagem está vivo" 
+

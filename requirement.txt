@@ -1,0 +1,117 @@
+    ✅ 1. O Guerreiro (10 pontos):  Precisamos representar um Guerreiro. Pense nas características 
+essenciais que ele deve ter (como nome, pontos de vida, força de ataque) e crie uma classe 
+para representá -lo. 
+
+✅ 2. O Mago (10 pontos):  O próximo herói é um Mago. Crie uma classe para ele, considerando 
+que, além das características básicas, ele também possui poder mágico.  
+
+✅ 3. O Arqueiro (10 pontos):  Complete o trio de heróis com um Arqueiro. Pense em um 
+atributo que o diferencie, como sua precisão, e modele a classe correspondente.  
+
+✅ 4. O Primeiro Inimigo (10 pontos):  Todo herói precisa de um adversário. Crie uma classe 
+para representar um Monstro genérico e, a partir dela, crie uma instância de um Goblin, o 
+primeiro desafio da jornada.  
+
+✅ 5. Status do Personagem (10 pontos):  Ao inspecionar um personagem 
+(print(meu_guerreiro)), queremos ver um resumo claro de suas informações. Como você 
+pode fazer isso acontecer?  
+
+✅ 6. Ação de Ataque (10 pontos):  Personagens e monstros precisam de uma ação básica: 
+atacar. Adicione um comportamento de ataque às suas classes. Por enquanto, pode ser uma 
+simples mensagem de ação.  
+
+✅ 7. Itens: Arma (10 pontos):  Um RPG precisa de itens. Crie uma classe para representar uma 
+Arma, que deve ter ao menos um nome e um poder de dano. Crie instâncias para uma 
+"Espada Longa" e um "Cajado Mágico".  
+
+✅ 8. Itens: Poção (10 pontos):  Crie também uma classe para representar uma Poção. Ela deve 
+ter um nome e um valor de cura. Crie uma instância para uma "Poção de Vida".  
+
+✅ 9. Equipando um Herói (10 pontos):  Um guerreiro é mais forte com uma arma. Como você 
+pode associar um objeto Arma a um personagem, como o Guerreiro?  
+
+✅ 10. Poder de Ataque Real (10 pontos):  O ataque de um herói deve considerar sua força 
+base mais o poder da arma equipada. Atualize a lógica de ataque para refletir essa soma.  
+ 
+
+  
+NÍVEL INTERMEDIÁRIO: A FORJA DAS LENDAS  
+✅ 11. Evitando Repetição (15 pontos):  Guerreiros, Magos e Arqueiros possuem vários 
+atributos em comum. Como você pode criar uma estrutura base Personagem para evitar a 
+repetição de código entre essas classes?  
+
+✅ 12. Protegendo a Vida (15 pontos):  A vida de um personagem é um atributo crítico. Não 
+queremos que ela seja alterada para valores inválidos (como números negativos). Como você 
+pode proteger o atributo de vida, controlando o acesso e a modificação dele?  
+
+✅ 13. Recebendo Dano (15 pontos):  Quando um personagem é atacado, ele perde vida. 
+Implemente uma lógica para que um personagem possa receber_dano, garantindo que sua 
+vida nunca fique abaixo de zero.  
+
+✅ 14. Combate Real (15 pontos):  Agora que os personagens podem receber dano, a ação de 
+atacar deve ter um efeito concreto. Faça com que o ataque de um combatente cause dano 
+em um alvo.  
+
+✅ 15. O Inventário (15 pontos):  Heróis colecionam muitos itens. Modele uma classe Inventário 
+que possa guardar uma coleção de itens (como armas e poções).  
+
+✅ 16. Integrando o Inventário (15 pontos):  Um personagem deve possuir um inventário. Como 
+você pode associar um Inventário a cada Personagem que for criado?  
+
+17. Usando Itens de Cura (15 pontos):  Um personagem ferido precisa usar poções de seu 
+inventário para se curar. Implemente essa funcionalidade, lembrando de não ultrapassar a 
+vida máxima do personagem.  
+
+✅ 18. Ataques Únicos (15 pontos):  O ataque de um Mago usa magia, o de um Arqueiro, 
+precisão. Como você pode especializar a ação de atacar de cada classe para que reflita suas 
+características únicas?  
+
+✅ 19. Fábrica de Monstros (15 pontos):  Em nosso jogo, precisaremos criar vários Goblins, 
+todos com os mesmos status. Crie um jeito prático de gerar um "Goblin Padrão" a partir da 
+classe Monstro, sem precisar lembrar seus atributos toda vez.  
+
+✅ 20. Sobrevivência (15 pontos):  Em uma batalha, é crucial saber se um combatente foi 
+derrotado. Adicione uma forma de verificar se um personagem ou monstro ainda esta_vivo().  
+ 
+ 
+
+NÍVEL AVANÇADO: O PANTEÃO DOS CAMPEÕES  
+Foco:  Polimorfismo, Classes Abstratas, Métodos Estáticos e Interação Complexa.  
+
+✅ 21. Molde de Habilidade (20 pontos):  Nossos heróis precisam de habilidades especiais 
+(Ataque Forte, Bola de Fogo, etc.). Todas as habilidades devem ter uma forma de serem 
+"usadas", mas cada uma age de forma diferente. Como você pode criar um "molde" ou 
+"contrato" que obrigue toda Habilidade a ter uma lógica de uso?  
+
+✅ 22. Habilidades em Ação (20 pontos):  Com base no molde criado, implemente as 
+habilidades AtaqueForte e BolaDeFogo.  
+
+23. Usando Habilidades (20 pontos):  Um personagem deve ser capaz de usar qualquer 
+uma de suas habilidades. Implemente um mecanismo que permita a um personagem escolher 
+e usar uma Habilidade de sua lista contra um alvo.  
+
+✅ 24. A Sorte está Lançada (20 pontos):  Muitos eventos em um RPG dependem da sorte. 
+Crie uma ferramenta utilitária, como uma classe Dado, que possa ser usada em qualquer 
+lugar para "rolar" um valor aleatório.  
+
+✅ 25. Combate Imprevisível (20 pontos):  Incorpore o fator sorte no combate. Use a sua 
+ferramenta de Dado para adicionar uma variação aleatória ao dano dos ataques.  
+
+✅ 26. Inimigos Mais Fortes (20 pontos):  O Goblin ficou fácil demais. Crie um novo tipo de 
+monstro, o Orc, que possua um comportamento de ataque diferente, como uma chance de 
+desferir um golpe crítico com dano dobrado.  
+
+27. Gerenciador de Batalha (20 pontos):  O combate precisa de regras. Crie uma classe 
+Batalha que seja responsável por gerenciar um confronto entre dois combatentes.  
+
+28. Sistema de Turnos (20 pontos):  Uma batalha acontece em turnos. Implemente a lógica 
+de turnos dentro da sua classe Batalha. O combate deve continuar enquanto os dois 
+oponentes estiverem vivos.  
+
+29. O Vencedor (20 pontos):  Ao final do combate, o sistema de Batalha deve ser capaz de 
+identificar e anunciar quem foi o vencedor.  
+
+30. Batalha em Equipe (20 pontos):  As maiores aventuras são em grupo. Expanda seu 
+sistema de Batalha para que ele possa gerenciar combates entre duas equipes de 
+personagens.  
+  
