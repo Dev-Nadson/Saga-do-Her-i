@@ -40,6 +40,7 @@ class Character():
             return atk
         else:
             print("Habilidade especial falhou!")
+            return False
         
     
 class Inventory():
@@ -68,8 +69,10 @@ class Warrior(Character):
         return atk
     
     def specialAbilty(self):
-        print(f"{self.name} usou Ataque Forte!")
-        return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
+        atk = super().specialAbilty()
+        if atk:
+            print(f"{self.name} usou Ataque Forte!")
+            return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
         
 class Archer(Character):
     def __init__(self, name, hp, strength, weapon, accuracy, inventory):
@@ -89,9 +92,11 @@ class Archer(Character):
        print(f"{atk}, Ataque a distância")
        return atk
     
-    def specialAbilty(self, (self)):
-        print(f"{self.name} usou Tiro Ràpido!")
-        return self.accuracy + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
+    def specialAbilty(self):
+        atk = super().specialAbilty()
+        if atk:
+            print(f"{self.name} usou Tiro taque Forte!")
+            return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
 
     
 class Mage(Character):
@@ -113,8 +118,10 @@ class Mage(Character):
         return atk 
     
     def specialAbilty(self):
-        print(f"{self.name} usou Tiro Ràpido!")
-        return self.magicPower + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
+        atk = super().specialAbilty()
+        if atk:
+            print(f"{self.name} usou Bola de Fogo")
+            return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
 
 class Enemy(Character):
     def __init__(self, name, hp, strength, enemy_type, special=False):
