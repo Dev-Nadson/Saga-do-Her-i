@@ -12,11 +12,13 @@ class Dados():
 
 class Character():
 
-    def __init__(self, name, hp, strength, weapon, inventory):
+    def __init__(self, name, hp, strength, weapon, potion, inventory):
         self.name = name
+        self.max_hp = hp
         self.hp = hp
         self.strength = strength
         self.weapon = weapon
+        self.potions = potion
         self.inventory = inventory
 
     def __str__(self):
@@ -42,7 +44,16 @@ class Character():
             print("Habilidade especial falhou!")
             return False
         
-    
+    def useCurePotion(self, potion): 
+        if self.hp <= 0:
+            return "Poção não eficaz"
+        
+        if self.hp + potion.atribute >= self.max_hp:
+            return self.max_hp
+        
+        return self.hp + potion.atribute
+
+        
 class Inventory():
     def __init__(self, items):
         self.items = items
@@ -145,9 +156,10 @@ class Weapons():
        self.damageType = damageType
  
 class Potions():
-    def __init__(self, name, effect):
-        self.name = name
-        self.effect = effect
+    def __init__(self, name, effect, atribute):
+        self.name = name 
+        self.effect = effect 
+        self.atribute = atribute
 
     def __str__(self):
         return f"Nome da poção: {self.name}, O efeito da poção é: {self.effect}"

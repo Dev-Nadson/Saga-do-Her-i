@@ -48,21 +48,75 @@ class System():
         
     def create_potion(option, name="", effect=""):
         if option == 1:
-            return Potions("Poção de cura", "Cura a vida do herói")
+            return Potions("Poção de cura", "Cura a vida do herói", 20)
         
         if option == 2:
-            return Potions("Poção de poder", "Aumenta a força do herói")
-        
-        else:
-            return Potions(name, effect)    
+            return Potions("Poção de poder", "Aumenta a força do herói", 20)
     
         
 class Game():
-    pass
+    def __init__(self, hero):
+        self.hero = hero
 
-    def isAlive(object):
-        if object.hp <= 0: 
+    def isAlive(self):
+        if self.hero.hp <= 0: 
             return "Personagem está morto" 
         else: 
             return "Persnoagem está vivo" 
+        
+    def usePotion(self):
+        print("===== Escolha a Habilidade =====")
+        print("1. Poção de Cura")
+        print("0. Sair")
+        option = int(input("Escolha a opção"))
 
+        match option:
+            case 1:
+                self.hero.usePotion()
+
+            case 0:
+                print("Poção não foi usada")
+
+            case _:
+                print("Opção inválida.\n") 
+                
+
+    def useHabilities(self):
+        print("===== Escolha a Habilidade =====")
+        print("1. Ataque Normal")
+        print("2. Ataque Forte")
+        print("3. Usar poção")
+        print("0. Sair")
+        option = int(input("Escolha a opção"))
+
+        match option:
+            case 1:
+                self.hero.attack()
+
+            case 2:
+                self.hero.specialAbilty()
+
+            case 3:
+                Game.usePotion(self.hero)
+
+            case 0:
+                print("Nenhuma habilidade foi usada")
+
+            case _:
+                print("Opção inválida.\n") 
+
+
+class Battle():
+    def __init__(self, player01, player02):
+        self.player01 = player01
+        self.player02 = player02
+
+    def battle(self, players, Game):   
+        print("===== Batalha =====")
+        hero = ("Escolha o personagem:")
+
+        i = 1
+        for player in players:
+            print(f"{i}. {player}")
+        
+        Game.useHabilities()

@@ -1,4 +1,4 @@
-    ✅ 1. O Guerreiro (10 pontos):  Precisamos representar um Guerreiro. Pense nas características 
+✅ 1. O Guerreiro (10 pontos):  Precisamos representar um Guerreiro. Pense nas características 
 essenciais que ele deve ter (como nome, pontos de vida, força de ataque) e crie uma classe 
 para representá -lo. 
 
@@ -58,7 +58,7 @@ que possa guardar uma coleção de itens (como armas e poções).
 ✅ 16. Integrando o Inventário (15 pontos):  Um personagem deve possuir um inventário. Como 
 você pode associar um Inventário a cada Personagem que for criado?  
 
-17. Usando Itens de Cura (15 pontos):  Um personagem ferido precisa usar poções de seu 
+✅ 17. Usando Itens de Cura (15 pontos):  Um personagem ferido precisa usar poções de seu 
 inventário para se curar. Implemente essa funcionalidade, lembrando de não ultrapassar a 
 vida máxima do personagem.  
 
@@ -86,7 +86,7 @@ Foco:  Polimorfismo, Classes Abstratas, Métodos Estáticos e Interação Comple
 ✅ 22. Habilidades em Ação (20 pontos):  Com base no molde criado, implemente as 
 habilidades AtaqueForte e BolaDeFogo.  
 
-23. Usando Habilidades (20 pontos):  Um personagem deve ser capaz de usar qualquer 
+✅ 23. Usando Habilidades (20 pontos):  Um personagem deve ser capaz de usar qualquer 
 uma de suas habilidades. Implemente um mecanismo que permita a um personagem escolher 
 e usar uma Habilidade de sua lista contra um alvo.  
 
@@ -101,7 +101,7 @@ ferramenta de Dado para adicionar uma variação aleatória ao dano dos ataques.
 monstro, o Orc, que possua um comportamento de ataque diferente, como uma chance de 
 desferir um golpe crítico com dano dobrado.  
 
-27. Gerenciador de Batalha (20 pontos):  O combate precisa de regras. Crie uma classe 
+✅ 27. Gerenciador de Batalha (20 pontos):  O combate precisa de regras. Crie uma classe 
 Batalha que seja responsável por gerenciar um confronto entre dois combatentes.  
 
 28. Sistema de Turnos (20 pontos):  Uma batalha acontece em turnos. Implemente a lógica 
@@ -114,4 +114,3 @@ identificar e anunciar quem foi o vencedor.
 30. Batalha em Equipe (20 pontos):  As maiores aventuras são em grupo. Expanda seu 
 sistema de Batalha para que ele possa gerenciar combates entre duas equipes de 
 personagens.  
-  

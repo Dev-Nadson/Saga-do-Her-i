@@ -1,4 +1,4 @@
-from services import Player, System
+from services import Player, System, Game
 
 players = []
 enemies = []
@@ -48,19 +48,12 @@ def create_potion():
         print(" ===== Crie uma poção ===== ")
         print("1 - Poção de Cura")
         print("2 - Poção de poder")
-        print("0 - Poção Custom")
         option = int(input("Opção: "))
 
         if option in ( 1, 2 ):
                 potion = System.create_potion(option)
                 potions.append(list(potion))
-
-        if option == 0:
-            print(" ===== Poção customizada ===== ")
-            name = input("Insira o nome da poção: ")
-            effect = input("Insira o efeito da poção: ")
-            potion = System.create_potion(option, name, effect)
-
+                
         else:
             print("Opção inválida.\n")
 
@@ -76,6 +69,7 @@ def dev_tools():
 
         case _:
             print("Opção inválida.\n")
+
 
 
 def menu():
