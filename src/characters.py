@@ -62,7 +62,7 @@ class Inventory():
         return self.items
 
 class Warrior(Character):
-    def __init__(self, name, hp, strength, weapon, defense, inventory):
+    def __init__(self, name, hp, strength, weapon, defense, potion, inventory):
         super().__init__(name, hp, strength, weapon, inventory)
         self.defense = defense
 
@@ -86,7 +86,7 @@ class Warrior(Character):
             return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
         
 class Archer(Character):
-    def __init__(self, name, hp, strength, weapon, accuracy, inventory):
+    def __init__(self, name, hp, strength, weapon, accuracy, potion, inventory):
         super().__init__(name, hp, strength, weapon, inventory)
         self.accuracy = accuracy
 
@@ -111,7 +111,7 @@ class Archer(Character):
 
     
 class Mage(Character):
-    def __init__(self, name, hp, strength, weapon, magicPower, inventory):
+    def __init__(self, name, hp, strength, weapon, magicPower, potion, inventory):
         super().__init__(name, hp, strength, weapon, inventory)
         self.magicPower = magicPower
 
