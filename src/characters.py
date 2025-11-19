@@ -1,6 +1,4 @@
-#Classe pai
 import random
-
 class Dados():
     pass
 
@@ -8,8 +6,9 @@ class Dados():
         return random.randint(1,20)
     def rolar_d6():
         return random.randint(1,6)
+    
 
-
+#Classe pai
 class Character():
 
     def __init__(self, name, hp, strength, weapon, potion, inventory):

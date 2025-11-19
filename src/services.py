@@ -4,10 +4,12 @@ from characters import Mage
 from characters import Enemy
 from characters import Weapons
 from characters import Potions
+from characters import Dados
 
 sword = Weapons("Espada longa", 10, "Fisico")
 wand = Weapons("Cajado Mágico", 10, "Mágico")
 bow = Weapons("Arco", 8, "Físico")
+
 
 class Player():
     def create_player(type):

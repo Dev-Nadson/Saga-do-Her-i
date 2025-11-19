@@ -1,4 +1,5 @@
-from services import Player, System, Game, Battle
+from services import Player, System, Game, Battle, Dados
+import time
 
 players = []
 enemies = []
@@ -99,8 +100,9 @@ def menu():
                 for player in players:
                     print(f"{i}. {player}")
                 
+                #por que só 2 players? E precisamos criar/escolher monstros também
                 op = int(input("Escolha o personagem 01: "))
-                player01 = players[op-1]
+                player01 = players[op-1] #Pq -1?
 
                 op = int(input("Escolha o personagem 02: "))
                 player02 = players[op-1]
@@ -109,6 +111,10 @@ def menu():
                 battle = Battle(player01, player02)
 
                 battle.battle()
+                #Lógica de turnos: rolar uma iniciativa para cada entidade (monstros e players).
+                #Uma iniciativa é basicamente um valor que se obtém quando rola um d20.
+                #A ordem de jogadas é de acordo com o número sorteado, do maior para o menor
+               
             case 0:
                 dev_tools()
 
