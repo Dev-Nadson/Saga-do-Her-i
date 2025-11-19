@@ -1,4 +1,4 @@
-from services import Player, System, Game
+from services import Player, System, Game, Battle
 
 players = []
 enemies = []
@@ -93,8 +93,22 @@ def menu():
                 create_potion()
 
             case 4:
-                print("Entrando no jogo...\n")
+                i = 1
+                
+                print("===== Personagens: ")
+                for player in players:
+                    print(f"{i}. {player}")
+                
+                op = int(input("Escolha o personagem 01: "))
+                player01 = players[op-1]
 
+                op = int(input("Escolha o personagem 02: "))
+                player02 = players[op-1]
+
+                print(player01, player02)
+                battle = Battle(player01, player02)
+
+                battle.battle()
             case 0:
                 dev_tools()
 

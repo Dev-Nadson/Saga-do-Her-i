@@ -110,13 +110,8 @@ class Battle():
     def __init__(self, player01, player02):
         self.player01 = player01
         self.player02 = player02
+        self.heroes = []
 
-    def battle(self, players, Game):   
+    def battle(self):   
         print("===== Batalha =====")
-        hero = ("Escolha o personagem:")
 
-        i = 1
-        for player in players:
-            print(f"{i}. {player}")
-        
-        Game.useHabilities()
