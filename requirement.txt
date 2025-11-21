@@ -104,13 +104,13 @@ desferir um golpe crítico com dano dobrado.
 ✅ 27. Gerenciador de Batalha (20 pontos):  O combate precisa de regras. Crie uma classe 
 Batalha que seja responsável por gerenciar um confronto entre dois combatentes.  
 
-28. Sistema de Turnos (20 pontos):  Uma batalha acontece em turnos. Implemente a lógica 
+✅ 28. Sistema de Turnos (20 pontos):  Uma batalha acontece em turnos. Implemente a lógica 
 de turnos dentro da sua classe Batalha. O combate deve continuar enquanto os dois 
 oponentes estiverem vivos.  
 
-29. O Vencedor (20 pontos):  Ao final do combate, o sistema de Batalha deve ser capaz de 
+✅ 29. O Vencedor (20 pontos):  Ao final do combate, o sistema de Batalha deve ser capaz de 
 identificar e anunciar quem foi o vencedor.  
 
-30. Batalha em Equipe (20 pontos):  As maiores aventuras são em grupo. Expanda seu 
+✅ 30. Batalha em Equipe (20 pontos):  As maiores aventuras são em grupo. Expanda seu 
 sistema de Batalha para que ele possa gerenciar combates entre duas equipes de 
 personagens.  

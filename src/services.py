@@ -1,119 +1,173 @@
-from characters import Warrior
-from characters import Archer
-from characters import Mage
-from characters import Enemy
-from characters import Weapons
-from characters import Potions
-from characters import Dados
+from characters import Warrior, Archer, Mage, Enemy, Weapons, Potions, Dados, Inventory
+import time
+import random
 
-sword = Weapons("Espada longa", 10, "Fisico")
+# Itens Globais
+sword = Weapons("Espada Longa", 10, "Físico")
 wand = Weapons("Cajado Mágico", 10, "Mágico")
-bow = Weapons("Arco", 8, "Físico")
-
+bow = Weapons("Arco Curto", 8, "Físico")
 
 class Player():
-    def create_player(type):
+    @staticmethod
+    def create_player(type_option):
         name = input("Informe o nome do personagem: ")
-        hp = int(input("Informe a quantidade de vida do personagem: "))
-
-        while hp < 0:
-            print("Vida inválida, digite um valor positivo")
-            hp = int(input("Informe uma quantidade válida de vida pro personagem: "))
-
+        while True:
+            try:
+                hp = int(input("Informe a quantidade de vida (HP): "))
+                if hp > 0: break
+            except ValueError: pass
         strength = int(input("Informe a força do personagem: "))
+        
+        start_potion = Potions("Poção Pequena", "Cura", 20)
+        inv = Inventory([start_potion, start_potion]) 
 
-        if type == 1:
-            defense = int(input("Informe o defesa do personagem: "))
-            return Warrior(name, hp, strength, sword, defense)
-
-        if type == 2:
-            accuracy = int(input("Insira o modificador de acerto: "))
-            return Archer(name, hp, strength, wand, accuracy)
-
-        if type == 3:
-            magicPower = int(input("Insira o poder mágico:"))
-            return Mage(name, hp, strength, bow, magicPower)
+        if type_option == 1:
+            defense = int(input("Informe a defesa: "))
+            return Warrior(name, hp, strength, sword, defense, inv)
+        if type_option == 2:
+            accuracy = int(input("Informe a precisão: "))
+            return Archer(name, hp, strength, bow, accuracy, inv)
+        if type_option == 3:
+            magic_power = int(input("Informe o poder mágico: "))
+            return Mage(name, hp, strength, wand, magic_power, inv)
             
 class System():
-    def create_enemy(option, name="", hp="", strength="", enemy_type=""):
-        if option == 1:
-            return Enemy("Goblin", 100, 100, "Monster")
+    @staticmethod
+    def create_enemy(option, name="", hp=0, strength=0, enemy_type=""):
+        if option == 1: return Enemy("Goblin", 60, 15, "Monstro")
+        if option == 2: return Enemy("Fantasma", 80, 20, "Espírito")
+        if option == 3: return Enemy("ORC CHEFE", 150, 30, "Boss", special=True)
+        else: return Enemy(name, hp, strength, enemy_type)
         
-        if option == 2:
-            return Enemy("Fantasma", 200, 50, "Ghost")
-        
-        if option == 2:
-            return Enemy("ORC", 300, 200, "Boss", special=True)
-        
-        else:
-            return Enemy(name, hp, strength, enemy_type)
-        
-    def create_potion(option, name="", effect=""):
-        if option == 1:
-            return Potions("Poção de cura", "Cura a vida do herói", 20)
-        
-        if option == 2:
-            return Potions("Poção de poder", "Aumenta a força do herói", 20)
-    
-        
-class Game():
-    def __init__(self, hero):
-        self.hero = hero
-
-    def isAlive(self):
-        if self.hero.hp <= 0: 
-            return "Personagem está morto" 
-        else: 
-            return "Persnoagem está vivo" 
-        
-    def usePotion(self):
-        print("===== Escolha a Habilidade =====")
-        print("1. Poção de Cura")
-        print("0. Sair")
-        option = int(input("Escolha a opção"))
-
-        match option:
-            case 1:
-                self.hero.usePotion()
-
-            case 0:
-                print("Poção não foi usada")
-
-            case _:
-                print("Opção inválida.\n") 
-                
-
-    def useHabilities(self):
-        print("===== Escolha a Habilidade =====")
-        print("1. Ataque Normal")
-        print("2. Ataque Forte")
-        print("3. Usar poção")
-        print("0. Sair")
-        option = int(input("Escolha a opção"))
-
-        match option:
-            case 1:
-                self.hero.attack()
-
-            case 2:
-                self.hero.specialAbilty()
-
-            case 3:
-                Game.usePotion(self.hero)
-
-            case 0:
-                print("Nenhuma habilidade foi usada")
-
-            case _:
-                print("Opção inválida.\n") 
-
+    @staticmethod
+    def create_potion(option):
+        if option == 1: return Potions("Poção de Cura", "Cura", 50)
+        if option == 2: return Potions("Poção de Força", "Buff", 10)
 
 class Battle():
-    def __init__(self, player01, player02):
-        self.player01 = player01
-        self.player02 = player02
-        self.heroes = []
+    def __init__(self, combatants_list):
+        self.combatants = combatants_list
 
-    def battle(self):   
-        print("===== Batalha =====")
+    def get_alive_combatants(self):
+        return [c for c in self.combatants if c.is_alive()]
 
+    def start(self):
+        print("\n" + "="*20)
+        print("     INÍCIO DO COMBATE     ")
+        print("="*20)
+        
+        turn_count = 1
+
+        # O combate continua enquanto houver pelo menos 2 pessoas vivas
+        while len(self.get_alive_combatants()) > 1:
+            print(f"\n🔹🔹🔹 TURNO {turn_count} 🔹🔹🔹")
+            time.sleep(0.5)
+
+            # Define ordem de iniciativa
+            alive_list = self.get_alive_combatants()
+            initiative_order = sorted(alive_list, key=lambda x: Dados.rolar_d20(), reverse=True)
+
+            for char in initiative_order:
+                # Checa se morreu antes de chegar a vez dele
+                if not char.is_alive(): continue
+                
+                # Checa se a batalha acabou no meio do turno
+                if len(self.get_alive_combatants()) < 2: break
+
+                print(f"\n Vez de: {char.name} (HP: {char.hp})")
+                
+                # === SEPARAÇÃO DE LÓGICA: PLAYER vs ENEMY ===
+                if isinstance(char, Enemy):
+                    self.enemy_turn_ai(char)
+                else:
+                    self.player_turn_menu(char)
+            
+            turn_count += 1
+
+        self.announce_winner()
+
+    def enemy_turn_ai(self, monster):
+        # Lógica simples da IA: Monstros atacam Heróis
+        # Filtra alvos que NÃO são Inimigos (ou seja, são Heróis)
+        possible_targets = [c for c in self.get_alive_combatants() if not isinstance(c, Enemy)]
+        
+        if not possible_targets:
+            print(f"{monster.name} ruge vitorioso, pois não há mais heróis!")
+            return
+
+        # Escolhe um herói aleatório
+        target = random.choice(possible_targets)
+        
+        time.sleep(1)
+        dmg = monster.attack()
+        target.receive_damage(dmg)
+
+    def player_turn_menu(self, hero):
+        # 1. Cria lista de alvos (Todos que não são o próprio herói)
+        targets = [c for c in self.get_alive_combatants() if c != hero]
+        
+        if not targets:
+            print("Não há ninguém para atacar.")
+            return
+
+        # Seleção de Alvo
+        selected_target = None
+        print(f"   Selecione seu alvo:")
+        for i, t in enumerate(targets):
+            # Mostra: 1. Nome (Tipo) - HP
+            type_str = "Inimigo" if isinstance(t, Enemy) else "Player"
+            print(f"   {i+1}. {t.name} ({type_str}) - HP: {t.hp}")
+        
+        while True:
+            try:
+                idx = int(input("   Número do alvo: ")) - 1
+                if 0 <= idx < len(targets):
+                    selected_target = targets[idx]
+                    break
+                else:
+                    print("   Alvo inválido.")
+            except ValueError:
+                print("   Digite um número válido.")
+
+        # 2. Escolher Ação
+        while True:
+            print(f"   [Ação contra: {selected_target.name}]")
+            print("   1. Ataque Básico")
+            print("   2. Habilidade Especial")
+            print("   3. Usar Poção")
+            
+            try:
+                choice = int(input("   Sua escolha: "))
+                
+                if choice == 1:
+                    dmg = hero.attack()
+                    selected_target.receive_damage(dmg)
+                    break 
+                
+                elif choice == 2:
+                    dmg = hero.special_ability()
+                    if dmg > 0: 
+                        selected_target.receive_damage(dmg)
+                    break 
+
+                elif choice == 3:
+                    used = hero.use_cure_potion()
+                    if used: break 
+                    # Se não usou (inventário vazio ou vida cheia), repete o menu
+
+                else:
+                    print("   Opção inválida!")
+            except ValueError:
+                print("   Digite um número válido.")
+
+    def announce_winner(self):
+        print("\n" + "="*40)
+        survivors = self.get_alive_combatants()
+        if survivors:
+            winner = survivors[0]
+            # Verifica se quem sobrou é herói ou monstro
+            if isinstance(winner, Enemy):
+                print(" GAME OVER! Os monstros venceram.")
+            else:
+                print(f" VITÓRIA! {survivors[0].name} é o último sobrevivente!")
+        print("="*40)

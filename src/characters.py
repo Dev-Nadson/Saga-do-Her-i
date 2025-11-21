@@ -1,165 +1,187 @@
 import random
+
 class Dados():
-    pass
-
+    @staticmethod
     def rolar_d20():
-        return random.randint(1,20)
-    def rolar_d6():
-        return random.randint(1,6)
+        return random.randint(1, 20)
     
+    @staticmethod
+    def rolar_d6():
+        return random.randint(1, 6)
 
-#Classe pai
 class Character():
-
-    def __init__(self, name, hp, strength, weapon, potion, inventory):
+    def __init__(self, name, hp, strength, weapon, inventory=None):
         self.name = name
         self.max_hp = hp
-        self.hp = hp
+        self._hp = hp 
         self.strength = strength
         self.weapon = weapon
-        self.potions = potion
-        self.inventory = inventory
+        self.inventory = inventory if inventory else Inventory([])
+
+    @property
+    def hp(self):
+        return self._hp
+    
+    @hp.setter
+    def hp(self, value):
+        self._hp = max(0, value)
 
     def __str__(self):
-        return f"Nome: {self.name} \nPontos de vida: {self.hp} \nForça: {self.strength}"
-    
-    #esse foi o iter que adicionei para testar fazer o for in mas não deu certo ainda, tenho quer melhor como funciona
-    def __iter__(self):
-        return iter((self.name, self.hp, self.strength, self.weapon, self.inventory.items))
+        return f"{self.name} (HP: {self.hp}/{self.max_hp} | Força: {self.strength} | Arma: {self.weapon.name})"
 
-    def atack(self):
-        print(f"O ataque é de {self.strength + self.weapon.damage} ")
-        return self.strength + self.weapon.damage
+    def is_alive(self):
+        return self.hp > 0
+
+    def attack(self):
+        base_damage = self.strength + self.weapon.damage
+        return base_damage
     
     def receive_damage(self, damage):
-        self.hp = (self.hp - damage)
-        return "Morto" if self.hp <= 0 else self.hp
-    
-    def specialAbilty(self, atk):
-        if Dados.rolar_d20 > 15:
-            print("HABLIDADE ESPECIAL!")
-            return atk
+        old_hp = self.hp
+        self.hp -= damage
+        real_damage = old_hp - self.hp
+        print(f" {self.name} recebeu {real_damage} de dano. Vida restante: {self.hp}")
+        if not self.is_alive():
+            print(f" {self.name} morreu!")
+
+    def special_ability(self):
+        roll = Dados.rolar_d20()
+        print(f"  Rolagem de Sorte: {roll} (Precisa > 12)")
+        if roll > 12: 
+            return True
         else:
-            print("Habilidade especial falhou!")
             return False
         
-    def useCurePotion(self, potion): 
-        if self.hp <= 0:
-            return "Poção não eficaz"
+    def use_cure_potion(self): 
+        potion = None
+        for item in self.inventory.items:
+            if isinstance(item, Potions) and item.effect == "Cura":
+                potion = item
+                break
         
-        if self.hp + potion.atribute >= self.max_hp:
-            return self.max_hp
-        
-        return self.hp + potion.atribute
+        if potion:
+            if self.hp >= self.max_hp:
+                print("   Sua vida já está cheia!")
+                return False
+            
+            cura = potion.attribute
+            self.hp = min(self.max_hp, self.hp + cura)
+            self.inventory.items.remove(potion)
+            print(f"  {self.name} usou {potion.name} e recuperou {cura} de vida. HP: {self.hp}")
+            return True
+        else:
+            print("  Nenhuma poção de cura no inventário!")
+            return False
 
-        
 class Inventory():
     def __init__(self, items):
         self.items = items
 
     def __str__(self):
-        return self.items
+        names = [item.name for item in self.items]
+        return ", ".join(names) if names else "Vazio"
 
 class Warrior(Character):
-    def __init__(self, name, hp, strength, weapon, defense, potion, inventory):
+    def __init__(self, name, hp, strength, weapon, defense, inventory=None):
         super().__init__(name, hp, strength, weapon, inventory)
         self.defense = defense
 
     def __str__(self):
-        char_str = super().__str__() 
-        return f"{char_str} \nDefesa: {self.defense}"
-    
-    def __iter__(self):
-        super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter((self.name, self.hp, self.strength, self.weapon.name, self.defense, self.inventory.items))
+        return super().__str__() + f" | Defesa: {self.defense}"
 
-    def atack(self):
-        atk = self.strength + self.weapon.damage
-        print(f"{atk}, Ataque físico")
-        return atk
+    def attack(self):
+        dmg = super().attack()
+        print(f"⚔️ {self.name} desfere um golpe de espada! Dano: {dmg}")
+        return dmg
     
-    def specialAbilty(self):
-        atk = super().specialAbilty()
-        if atk:
-            print(f"{self.name} usou Ataque Forte!")
-            return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
+    def special_ability(self):
+        print(f"   Tentando usar: GOLPE ESMAGADOR...")
+        if super().special_ability():
+            bonus = Dados.rolar_d6() + Dados.rolar_d6()
+            dmg = self.attack() + bonus
+            print(f" SUCESSO! O golpe foi brutal! (+{bonus} dano extra)")
+            return dmg
+        print("  Falhou! O personagem tropeçou.")
+        return 0
         
 class Archer(Character):
-    def __init__(self, name, hp, strength, weapon, accuracy, potion, inventory):
+    def __init__(self, name, hp, strength, weapon, accuracy, inventory=None):
         super().__init__(name, hp, strength, weapon, inventory)
         self.accuracy = accuracy
 
     def __str__(self):
-        char_str = super().__str__() 
-        return f"{char_str} \nPrecisão: {self.accuracy}"
+        return super().__str__() + f" | Precisão: {self.accuracy}"
+    
+    def attack(self):
+       dmg = self.accuracy + self.weapon.damage
+       print(f" {self.name} dispara uma flecha rápida! Dano: {dmg}")
+       return dmg
+    
+    def special_ability(self):
+        print(f"   Tentando usar: TIRO NA CABEÇA...")
+        if super().special_ability():
+            bonus = Dados.rolar_d6() + Dados.rolar_d6()
+            dmg = self.attack() + bonus
+            print(f"  HEADSHOT! Dano massivo! (+{bonus} dano extra)")
+            return dmg
+        print("  Falhou! A flecha passou longe.")
+        return 0
 
-    def __iter__(self):
-        super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter((self.name, self.hp, self.strength, self.weapon.name, self.accuracy, self.inventory.items))
-    
-    def atack(self):
-       atk = self.accuracy + self.weapon.damage
-       print(f"{atk}, Ataque a distância")
-       return atk
-    
-    def specialAbilty(self):
-        atk = super().specialAbilty()
-        if atk:
-            print(f"{self.name} usou Tiro taque Forte!")
-            return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
-
-    
 class Mage(Character):
-    def __init__(self, name, hp, strength, weapon, magicPower, potion, inventory):
+    def __init__(self, name, hp, strength, weapon, magic_power, inventory=None):
         super().__init__(name, hp, strength, weapon, inventory)
-        self.magicPower = magicPower
+        self.magic_power = magic_power
 
     def __str__(self):
-        char_str = super().__str__() 
-        return f"{char_str} \nPoder Mágico: {self.magicPower}"
-
-    def __iter__(self):
-        super().__init__(self.name, self.hp, self.strength, self.weapon)
-        return iter((self.name, self.hp, self.strength, self.weapon.name, self.magicPower, self.inventory.items))
+        return super().__str__() + f" | Poder Mágico: {self.magic_power}"
     
-    def atack(self):
-        atk = self.magicPower + self.weapon.damage
-        print(f"{atk}, Ataque Mágico")
-        return atk 
+    def attack(self):
+        dmg = self.magic_power + self.weapon.damage
+        print(f" {self.name} lança uma orbe de energia! Dano: {dmg}")
+        return dmg 
     
-    def specialAbilty(self):
-        atk = super().specialAbilty()
-        if atk:
-            print(f"{self.name} usou Bola de Fogo")
-            return self.strength + self.weapon.damage + Dados.rolar_d6 + Dados.rolar_d6
+    def special_ability(self):
+        print(f"   Tentando usar: BOLA DE FOGO...")
+        if super().special_ability():
+            bonus = Dados.rolar_d6() + Dados.rolar_d6()
+            dmg = self.attack() + bonus
+            print(f" QUEIMADURA! O inimigo está em chamas! (+{bonus} dano extra)")
+            return dmg
+        print("  Falhou! A magia falhou.")
+        return 0
 
 class Enemy(Character):
     def __init__(self, name, hp, strength, enemy_type, special=False):
-        super().__init__(name, hp, strength)
+        default_weapon = Weapons("Ataque Básico", 0, "Físico") 
+        super().__init__(name, hp, strength, default_weapon)
         self.type = enemy_type
         self.special = special
 
     def __str__(self):
-        return f"Nome: {self.nome} \nPontos de vida: {self.hp} \nForça{self.strength} \nTipo de Monstro: {self.enemy_type}"
+        return f"[INIMIGO] {self.name} | HP: {self.hp} | Tipo: {self.type}"
     
-    def atack(self): 
-        if Dados.rolar_d20 == 20 and self.special == True:
-            return (self.strength * 2) 
-        else:
-            return self.strength
-    
+    def attack(self): 
+        base_dmg = self.strength
+        if self.special:
+            roll = Dados.rolar_d20()
+            if roll >= 18:
+                print(f"{self.name} enfurece e dá DANO DOBRADO!")
+                return base_dmg * 2
+        
+        print(f" {self.name} ataca violentamente! Dano: {base_dmg}")
+        return base_dmg
+
 class Weapons():
-   def __init__ (self, name, damage, damageType):
+   def __init__ (self, name, damage, damage_type):
        self.name = name
        self.damage = damage
-       self.damageType = damageType
+       self.damage_type = damage_type
  
 class Potions():
-    def __init__(self, name, effect, atribute):
+    def __init__(self, name, effect, attribute):
         self.name = name 
         self.effect = effect 
-        self.atribute = atribute
+        self.attribute = attribute
 
     def __str__(self):
-        return f"Nome da poção: {self.name}, O efeito da poção é: {self.effect}"
-    
+        return f"{self.name} ({self.effect}: {self.attribute})"

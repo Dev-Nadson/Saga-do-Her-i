@@ -1,6 +1,4 @@
-from menu import menu
-
-#deixar apenas a instância do menu aqui
+from menu import Menu
 
 if __name__ == "__main__":
-    menu()
+    Menu.main_menu()
